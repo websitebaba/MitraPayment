@@ -48,7 +48,13 @@ async function notifyTelegram(chatId, text) {
     chat_id: config.adminChatId,
     text: `Pesan baru dari website\nPercakapan: ${chatId}\n\n${text}\n\nBalas pesan ini untuk menjawab pengunjung.`
   });
-  await redis(['SET', `mp:telegram:reply:${config.adminChatId}:${result.message_id}`, chatId, 'EX', DAY * 30]);
+  // Telegram delivery must not be reported as failed when only the reply mapping
+  // has a temporary Redis problem. The message is already in the bot chat.
+  try {
+    await redis(['SET', `mp:telegram:reply:${config.adminChatId}:${result.message_id}`, chatId, 'EX', DAY * 30]);
+  } catch (error) {
+    console.error('Telegram reply mapping failed:', error);
+  }
   return true;
 }
 async function connectTelegramWebhook(origin) {
