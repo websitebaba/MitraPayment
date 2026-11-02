@@ -1,0 +1,7 @@
+{
+  "name": "davpay-indonesia",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js"
+  }
+}
