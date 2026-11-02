@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-
-<!DOCTYPE html>
-
 <html lang="id">
 <head>
 <meta charset="utf-8"/>
@@ -20,7 +17,7 @@
     body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.6}
     a{color:inherit;text-decoration:none}
     .wrap{width:min(1120px,calc(100% - 40px));margin:auto}
-    header{height:82px;display:flex;align-items:center;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+    header{height:82px;display:flex;align-items:center;background:#fff;border-bottom:1px solid #e8eaed;position:sticky;top:0;z-index:20;box-shadow:0 2px 14px rgba(32,33,36,.06)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
     .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.5px}
     .brand img{width:48px;height:48px;object-fit:contain}
@@ -30,7 +27,7 @@
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:12px;padding:13px 21px;background:var(--red);color:#fff;font-weight:750;font-size:14px;box-shadow:0 8px 18px rgba(237,28,46,.2);transition:.2s;cursor:pointer}
     .btn:hover{background:var(--red-dark);transform:translateY(-2px)}
     .btn-outline{background:#fff;color:var(--red);border:1px solid #ffd3d8;box-shadow:none}
-    .menu{display:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px;color:var(--ink)}
+    .menu{display:none;background:#fff;border:1px solid #dadce0;border-radius:10px;padding:10px;color:#202124;box-shadow:0 1px 3px rgba(60,64,67,.14);line-height:1;cursor:pointer}.menu-icon,.menu-icon::before,.menu-icon::after{display:block;width:18px;height:2px;border-radius:2px;background:#202124;transition:transform .2s ease,background .2s ease}.menu-icon{position:relative}.menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0}.menu-icon::before{top:-6px}.menu-icon::after{top:6px}.menu.is-open .menu-icon{background:transparent}.menu.is-open .menu-icon::before{transform:translateY(6px) rotate(45deg)}.menu.is-open .menu-icon::after{transform:translateY(-6px) rotate(-45deg)}.menu:focus-visible{outline:3px solid #c2dbff;outline-offset:2px}
     .hero{padding:76px 0 78px;overflow:hidden;background:radial-gradient(circle at 85% 20%,#e7f0ff 0,transparent 28%),linear-gradient(180deg,#fff 0%,#fff 80%,#f7f8fb 100%)}
     .hero-grid{display:grid;grid-template-columns:1fr;align-items:center;gap:0}
     .hero-grid > div:first-child{max-width:780px}
@@ -124,8 +121,9 @@
 
   
     /* Logo resmi DAVPAY INDONESIA dan Express Delivery */
-    .brand{display:flex;align-items:center;gap:0;min-width:0}
-    .brand img{display:block;width:205px;height:64px;object-fit:contain;object-position:left center}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#202124}
+    .brand img{display:block;width:44px;height:44px;object-fit:contain;object-position:center;border-radius:11px}
+    .brand span{font-size:16px;font-weight:800;letter-spacing:-.35px;line-height:1.05}.brand small{display:block;color:#5f6368;font-size:9px;letter-spacing:1.8px;font-weight:700;margin-top:4px}
     .foot-brand{display:flex;align-items:center;gap:0}
     .foot-brand img{display:block;width:190px;height:64px;object-fit:contain;background:transparent;border-radius:0}
     .hero-art img{width:100%;max-width:470px;height:350px;object-fit:contain;mix-blend-mode:multiply}
@@ -134,7 +132,7 @@
       .foot-brand img{width:175px;height:58px}
     }
     @media(max-width:480px){
-      .brand img{width:158px;height:53px}
+      .brand img{width:40px;height:40px}.brand span{font-size:14px}.brand small{font-size:8px;letter-spacing:1.5px}
       .hero-art img{height:245px;max-width:340px}
     }
     @media(max-width:800px){
@@ -201,35 +199,35 @@
   .topup-shell{min-height:100%;background:linear-gradient(180deg,#fff 0,#f5f7fb 240px)}
   .topup-header{height:68px;display:flex;align-items:center;gap:14px;padding:0 max(18px,calc((100% - 1080px)/2));background:#fff;border-bottom:1px solid #e9edf3;position:sticky;top:0;z-index:3}
   .topup-back{border:0;background:#f1f3f7;width:38px;height:38px;border-radius:12px;font-size:23px;color:#202534;cursor:pointer}
-  .topup-brand{display:flex;align-items:center;gap:9px}.topup-brand-mark{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#e31b2b;color:#fff;font-weight:900;font-size:12px}
+  .topup-brand{display:flex;align-items:center;gap:9px}.topup-brand-mark{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#1a73e8;color:#fff;font-weight:900;font-size:12px}
   .topup-brand b,.topup-brand small{display:block}.topup-brand b{font-size:12px;letter-spacing:.6px}.topup-brand small{font-size:9px;color:#7a8494;margin-top:2px;letter-spacing:1px}
   .topup-secure{margin-left:auto;font-size:11px;color:#687386}
   .topup-content{max-width:1080px;margin:0 auto;padding:36px 22px 60px}
-  .topup-heading{text-align:center;margin:0 auto 22px;max-width:600px}.topup-kicker{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#d91e2b}
+  .topup-heading{text-align:center;margin:0 auto 22px;max-width:600px}.topup-kicker{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#1a73e8}
   .topup-heading h1{font-size:30px;letter-spacing:-.8px;margin:8px 0;color:#202534}.topup-heading p{font-size:13px;color:#687386;line-height:1.6;margin:0}
   .topup-card,.payment-qr-card,.payment-detail-card{background:#fff;border:1px solid #e7ebf2;border-radius:19px;box-shadow:0 10px 30px rgba(26,42,70,.055)}
   .topup-card{max-width:520px;margin:0 auto;padding:25px}
   .topup-card label{display:block;font-size:10px;font-weight:800;letter-spacing:.7px;color:#394355;margin-bottom:8px}
   .topup-card input{width:100%;height:48px;border:1px solid #dce2eb;border-radius:11px;padding:0 13px;font-size:14px;color:#202534;background:#fff;outline:none}
-  .topup-card input:focus{border-color:#d92736;box-shadow:0 0 0 3px rgba(217,39,54,.09)}
+  .topup-card input:focus{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(217,39,54,.09)}
   .topup-field-note{font-size:10px;color:#8992a1;margin:6px 0 19px}
   .topup-label-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.topup-label-row label{margin:0}.topup-label-row span{font-size:10px;color:#8992a1}
   .topup-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:16px}
   .preset{min-height:40px;border:1px solid #e0e5ed;background:#fff;color:#344054;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
-  .preset.active{border-color:#d91e2b;color:#d91e2b;background:#fff4f5;box-shadow:inset 0 0 0 1px #d91e2b}
+  .preset.active{border-color:#1a73e8;color:#1a73e8;background:#fff4f5;box-shadow:inset 0 0 0 1px #1a73e8}
   .topup-card .topup-custom-label{margin:0 0 8px}
   .amount-input-wrap{display:flex;align-items:center;border:1px solid #dce2eb;border-radius:11px;height:48px;padding:0 13px;gap:8px}
-  .amount-input-wrap:focus-within{border-color:#d92736;box-shadow:0 0 0 3px rgba(217,39,54,.09)}
+  .amount-input-wrap:focus-within{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(217,39,54,.09)}
   .amount-input-wrap span{font-size:14px;font-weight:700;color:#687386}
   .amount-input-wrap input{border:0!important;box-shadow:none!important;height:44px;padding:0;font-weight:700}
   .topup-primary,.topup-secondary{width:100%;min-height:48px;border:0;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer}
-  .topup-primary{background:#d91e2b;color:#fff;margin-top:8px;box-shadow:0 6px 14px rgba(217,30,43,.17)}
+  .topup-primary{background:#1a73e8;color:#fff;margin-top:8px;box-shadow:0 6px 14px rgba(217,30,43,.17)}
   .topup-primary span{margin-left:8px}.topup-secondary{background:#f1f3f7;color:#344054;margin-top:10px}
   .topup-disclaimer{text-align:center;font-size:10px;line-height:1.5;color:#8992a1;margin:13px 0 0}
   .payment-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:17px;align-items:start}
   .payment-qr-card,.payment-detail-card{padding:20px}
   .payment-timer{display:flex;justify-content:space-between;align-items:center;background:#fff4f4;border:1px solid #ffe0e2;border-radius:12px;padding:11px 13px;margin-bottom:14px}
-  .timer-label{font-size:10px;color:#7b4b50}.payment-timer strong{font-size:20px;color:#d91e2b;font-variant-numeric:tabular-nums;letter-spacing:1px}
+  .timer-label{font-size:10px;color:#7b4b50}.payment-timer strong{font-size:20px;color:#1a73e8;font-variant-numeric:tabular-nums;letter-spacing:1px}
   .qr-image-frame{max-width:340px;margin:0 auto;padding:8px;border:1px solid #e8edf3;border-radius:14px;background:#fff}
   .payment-qr-image{display:block;width:100%;height:auto;object-fit:contain}
   .qr-merchant{text-align:center;font-size:10px;font-weight:800;letter-spacing:.8px;color:#6b7482;margin:13px 0 5px}
@@ -237,7 +235,7 @@
   .qr-instruction{text-align:center;font-size:10px;line-height:1.5;color:#778191;margin:8px 4px 0}
   .payment-detail-card h2{font-size:17px;margin:1px 0 16px}
   .detail-line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #edf0f4;font-size:12px}
-  .detail-line span{color:#778191}.detail-line b{text-align:right;overflow-wrap:anywhere}.detail-line.total{border:0;padding-top:14px;font-size:14px}.detail-line.total b{color:#d91e2b}
+  .detail-line span{color:#778191}.detail-line b{text-align:right;overflow-wrap:anywhere}.detail-line.total{border:0;padding-top:14px;font-size:14px}.detail-line.total b{color:#1a73e8}
   .payment-steps{margin-top:12px}.payment-steps h3{font-size:13px;margin:0 0 9px}.payment-steps ol{padding-left:18px;margin:0;color:#5e6878;font-size:11px;line-height:1.65}.payment-steps li{padding-left:3px;margin:0 0 5px}
   .payment-warning{display:flex;flex-direction:column;gap:4px;background:#fff8e9;border:1px solid #f5e2b8;border-radius:11px;padding:12px;margin-top:15px}
   .payment-warning b{font-size:11px;color:#78530b}.payment-warning span{font-size:10px;line-height:1.55;color:#806c43}
@@ -617,8 +615,8 @@ footer{padding:30px 0}
 .method-option input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 .method-option.selected{border-color:#df2636;background:#fff7f7;box-shadow:inset 0 0 0 1px rgba(223,38,54,.12)}
 .method-radio{width:16px;height:16px;flex:0 0 16px;border:1.5px solid #c5ccd6;border-radius:50%;display:grid;place-items:center}
-.method-option.selected .method-radio{border-color:#d91e2b}
-.method-option.selected .method-radio:after{content:"";width:8px;height:8px;border-radius:50%;background:#d91e2b}
+.method-option.selected .method-radio{border-color:#1a73e8}
+.method-option.selected .method-radio:after{content:"";width:8px;height:8px;border-radius:50%;background:#1a73e8}
 .method-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
 .method-copy b{font-size:11px;color:#273244;line-height:1.2}
 .method-copy small{font-size:9px;color:#8791a0;line-height:1.25}
@@ -684,7 +682,7 @@ footer{padding:30px 0}
   transition:border-color .18s ease,background .18s ease,box-shadow .18s ease!important;
 }
 .topup-card .method-option.selected{
-  border:1.5px solid #d91e2b!important;background:#fff!important;
+  border:1.5px solid #1a73e8!important;background:#fff!important;
   box-shadow:0 0 0 3px rgba(217,30,43,.065)!important;
 }
 .topup-card .method-option input{
@@ -712,7 +710,7 @@ footer{padding:30px 0}
   width:18px!important;height:18px!important;border:1.5px solid #c8d0da!important;
   border-radius:50%!important;background:#fff!important;
 }
-.method-option.selected .method-radio{border:5px solid #d91e2b!important}
+.method-option.selected .method-radio{border:5px solid #1a73e8!important}
 .method-helper{display:flex;align-items:flex-start;gap:6px;margin:11px 2px 0!important;color:#8993a1!important;font-size:9px!important;line-height:1.5!important}
 .method-helper span{font-size:12px;color:#7b8797}
 .bank-transfer-panel[hidden],#qrisPaymentPanel[hidden]{display:none!important}
@@ -1081,7 +1079,7 @@ footer .foot,footer .foot *{color:inherit}
 body{background:var(--bg);color:var(--ink)}
 header{background:rgba(255,255,255,.96);border-bottom-color:#e8eaed}
 .links{color:#5f6368}.links a:hover{color:#1a73e8}
-.btn{background:#1a73e8;box-shadow:0 8px 18px rgba(26,115,232,.18)}.btn:hover{background:#1557b0}.btn-outline{color:#1a73e8;border-color:#c7d7f5}
+.btn{background:#1a73e8;box-shadow:0 8px 18px rgba(26,115,232,.18)}.btn:hover{background:#1557b0}.btn-outline{background:#fff;color:#1a73e8;border-color:#c7d7f5}.btn-outline:hover{background:#f5f8ff;color:#1557b0}
 .hero{background:radial-gradient(circle at 85% 20%,#e8f0fe 0,transparent 30%),linear-gradient(180deg,#fff 0%,#fff 80%,#f8fafd 100%)}
 .eyebrow{background:#e8f0fe;color:#1557b0}.dot{background:#1a73e8}
 .balance{background:linear-gradient(125deg,#1a73e8,#4285f4)}
@@ -1096,12 +1094,12 @@ footer{background:#202124;border-top:4px solid #1a73e8}
 <body>
 <header>
 <div class="wrap nav">
-<a aria-label="DAVPAY INDONESIA beranda" class="brand" href="#beranda"><img alt="DAVPAY INDONESIA" src="/davpay-logo.png"/></a>
+<a aria-label="DAVPAY INDONESIA beranda" class="brand" href="#beranda"><img alt="Logo DAVPAY INDONESIA" src="/davpay-logo.png"/><span>DAVPAY<small>INDONESIA</small></span></a>
 <nav aria-label="Navigasi utama" class="links" id="navLinks">
-<a href="#beranda">Beranda</a><a href="#panduan-cod">Panduan COD</a><a href="#layanan">Layanan</a><a href="#mitra">Mitra Ekspedisi</a><a href="#tentang">Tentang</a>
+<a data-open-topup="true" href="#topup">Top up 0% Admin</a><a href="#buat-pesanan">Buat pesanan</a><a href="https://live-tracking-aplikasi-mobile.vercel.app/" rel="noopener noreferrer" target="_blank">Live Tracking</a><a href="#panduan-cod">Alur kerja pengiriman COD</a><a href="mailto:support@davpay.id">Butuh bantuan</a><a href="https://play.google.com/store" rel="noopener noreferrer" target="_blank">Download Apk di Playstore</a>
 </nav>
 <a class="btn" href="#layanan">Jelajahi Layanan <span>→</span></a>
-<button aria-expanded="false" aria-label="Buka menu" class="menu" id="menuBtn">☰</button>
+<button aria-expanded="false" aria-label="Buka menu" class="menu" id="menuBtn"><span aria-hidden="true" class="menu-icon"></span></button>
 </div>
 </header><section aria-label="Banner promosi DAVPAY INDONESIA" class="promo-carousel">
 <div class="promo-track">
@@ -1133,7 +1131,7 @@ footer{background:#202124;border-top:4px solid #1a73e8}
 <h1>Kirim paket COD jadi mudah</h1>
 <p class="lead">Solusi pengiriman paket COD dengan tampilan layanan yang praktis, jelas, dan mudah digunakan.</p>
 <div class="actions">
-<a class="btn" href="#" id="openTopup" role="button">TOP UP QRIS<span>→</span></a>
+<a class="btn" href="#topup" id="openTopup" role="button">TOP UP 0%Admin<span>→</span></a>
 <a class="btn btn-outline" href="https://live-tracking-aplikasi-mobile.vercel.app/" rel="noopener noreferrer" target="_blank">Live Tracking<span>→</span></a>
 </div>
 <div class="trust"><div class="avatars"><i></i><i></i><i></i></div><span>Praktis • Jelas • Utamakan keamanan transaksi</span></div>
@@ -1441,13 +1439,16 @@ footer{background:#202124;border-top:4px solid #1a73e8}
   const navLinks = document.getElementById('navLinks');
   menuBtn.addEventListener('click', () => {
     const opened = navLinks.classList.toggle('open');
-    menuBtn.setAttribute('aria-expanded', String(opened));
-    menuBtn.textContent = opened ? '✕' : '☰';
+menuBtn.setAttribute('aria-expanded', String(opened));
+menuBtn.setAttribute('aria-label', opened ? 'Tutup menu' : 'Buka menu');
+menuBtn.classList.toggle('is-open', opened);
   });
-  navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    menuBtn.textContent = '☰';
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', (event) => {
+if (link.dataset.openTopup === 'true') { event.preventDefault(); openTopup(); }
+navLinks.classList.remove('open');
+menuBtn.setAttribute('aria-expanded', 'false');
+menuBtn.setAttribute('aria-label', 'Buka menu');
+menuBtn.classList.remove('is-open');
   }));
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1876,8 +1877,9 @@ footer{background:#202124;border-top:4px solid #1a73e8}
 })();
 </script><style>
 #mpChatLauncher{position:fixed;right:18px;bottom:18px;z-index:9998;border:0;border-radius:999px;background:#1a73e8;color:#fff;padding:14px 18px;font:700 14px Arial;box-shadow:0 8px 28px #20273533;cursor:pointer}#mpChatBox{position:fixed;right:18px;bottom:82px;width:min(360px,calc(100vw - 28px));height: min(500px,calc(100dvh - 110px));z-index:9999;background:#fff;border:1px solid #e9edf3;border-radius:18px;box-shadow:0 18px 55px #17203335;display:none;overflow:hidden;font-family:Arial,sans-serif;color:#202735}#mpChatBox.open{display:flex;flex-direction:column}.mpch-head{background:#1a73e8;color:#fff;padding:15px 16px;display:flex;justify-content:space-between;align-items:center}.mpch-head small{display:block;opacity:.85;margin-top:4px}.mpch-head button{background:none;color:white;border:0;font-size:24px}.mpch-msgs{padding:14px;overflow:auto;flex:1;background:#f7f8fb;display:flex;flex-direction:column;gap:9px}.mpch-bubble{max-width:85%;padding:10px 12px;border-radius:13px;background:#fff;box-shadow:0 1px 3px #0000000d;font-size:13px;line-height:1.45;overflow-wrap:anywhere}.mpch-bubble.mine{align-self:flex-end;background:#ffecef}.mpch-bubble small{display:block;color:#7b8493;font-size:10px;margin-top:5px}.mpch-form{display:flex;gap:8px;padding:11px;border-top:1px solid #edf0f4}.mpch-form input{min-width:0;flex:1;border:1px solid #dfe4ec;border-radius:22px;padding:11px 13px;font-size:14px}.mpch-form button{border:0;border-radius:22px;background:#1a73e8;color:white;padding:0 16px;font-weight:700}.mpch-note{font-size:10px;color:#7b8493;text-align:center;padding:5px}
+@media (max-width:560px){#mpChatLauncher{right:12px;bottom:76px;padding:11px 13px;font-size:12px}#mpChatBox{right:12px;bottom:76px;width:calc(100vw - 24px)}}
 </style>
-<button id="mpChatLauncher" type="button">�� Chat DAVPAY INDONESIA</button>
+<button id="mpChatLauncher" type="button">Chat DAVPAY INDONESIA</button>
 <section aria-label="Live chat support" id="mpChatBox"><header class="mpch-head"><div><strong>Admin DAVPAY INDONESIA</strong><small>Balasan admin masuk dari Telegram</small></div><button aria-label="Tutup" id="mpChatClose">×</button></header><div class="mpch-msgs" id="mpChatMessages"><div class="mpch-bubble">Halo! Selamat datang di DAVPAY INDONESIA. Ada yang bisa kami bantu?</div></div><div class="mpch-note" id="mpChatStatus">Hubungkan ke layanan chat untuk mengirim pesan.</div><form class="mpch-form" id="mpChatForm"><input autocomplete="off" id="mpChatInput" maxlength="1000" placeholder="Tulis pesan Anda…" required=""/><button type="submit">Kirim</button></form></section>
 <script>
 (()=>{const box=document.getElementById('mpChatBox'),launchers=document.querySelectorAll('#mpChatLauncher'),close=document.getElementById('mpChatClose'),form=document.getElementById('mpChatForm'),input=document.getElementById('mpChatInput'),msgs=document.getElementById('mpChatMessages'),status=document.getElementById('mpChatStatus');let id=localStorage.getItem('mp_chat_id');if(!id){id='mp'+crypto.randomUUID().replaceAll('-','');localStorage.setItem('mp_chat_id',id)}let busy=false;
