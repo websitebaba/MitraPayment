@@ -17,10 +17,10 @@ module.exports = async (req,res) => {
       `ID: ${id}`,
       `Akun: ${item.accountId}`,
       `Nominal: Rp${item.amount.toLocaleString('id-ID')}`,
-      `Metode: ${item.method}`,
+      `Metode: ${item.method || '-'}`,
       `Catatan: ${item.note || '-'}`,
       'Bukti pembayaran tersimpan di panel admin.'
-    ].join('\\n'));
+    ].join('\n'));
     return json(res,200,{ok:true,id,telegramNotified:true});
   } catch(error) { console.error('Deposit submission:',error); return json(res,500,{error:'Formulir tersimpan sebagian, tetapi belum berhasil diteruskan ke Telegram. Periksa konfigurasi Redis dan Telegram.'}); }
 };

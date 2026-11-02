@@ -4,6 +4,15 @@ const MAX_TEXT = 1000;
 const CHAT_ID_RE = /^[a-zA-Z0-9_-]{8,100}$/;
 const TELEGRAM_API = 'https://api.telegram.org';
 
+function publicOrigin(req) {
+  const configured = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || req?.headers?.['x-forwarded-host'] || req?.headers?.host;
+  if (!configured) return '';
+  const value = String(configured).trim();
+  if (/^https?:\/\//i.test(value)) return value.replace(/\/+$/, '');
+  const protocol = process.env.VERCEL || !/^localhost(?::\d+)?$/i.test(value) ? 'https' : 'http';
+  return `${protocol}://${value}`;
+}
+
 function telegramConfig() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const adminChatId = process.env.TELEGRAM_CHAT_ID;
@@ -93,4 +102,4 @@ async function getMessages(chatId) {
   const rows = await redis(['LRANGE', `mp:chat:${chatId}`, '0', '-1']);
   return (rows || []).map(row => { try { return JSON.parse(row); } catch { return null; } }).filter(Boolean);
 }
-module.exports = {DAY,MAX_TEXT,CHAT_ID_RE,redis,json,validChatId,cleanText,appendMessage,getMessages,telegramConfig,telegramWebhookSecret,telegramRequest,sendAdminTelegram,notifyTelegram,connectTelegramWebhook};
+module.exports = {DAY,MAX_TEXT,CHAT_ID_RE,redis,json,validChatId,cleanText,appendMessage,getMessages,telegramConfig,telegramWebhookSecret,telegramRequest,sendAdminTelegram,notifyTelegram,connectTelegramWebhook,publicOrigin};
