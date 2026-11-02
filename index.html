@@ -1664,5 +1664,13 @@ form.onsubmit=async e=>{if(e.isComposing||e.keyCode===229)return;e.preventDefaul
     });
   })();
 </script>
+<script>
+  document.querySelectorAll('.promo-slide img').forEach((image) => {
+    if (image.src.startsWith('data:image/')) {
+      image.src = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png';
+      image.alt = 'Banner DAVPAY Indonesia Versi 2 Bold Premium Merah';
+    }
+  });
+</script>
 </body>
 </html>
