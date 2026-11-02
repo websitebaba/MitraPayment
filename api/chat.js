@@ -1,12 +1,11 @@
-const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram,connectTelegramWebhook} = require('./_chat');
+const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram,connectTelegramWebhook,publicOrigin} = require('./_chat');
 
 let webhookSetup;
 function ensureTelegramWebhook(req) {
   if (webhookSetup) return webhookSetup;
-  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || req.headers['x-forwarded-host'] || req.headers.host;
-  if (!host) return Promise.reject(new Error('Domain aplikasi belum tersedia.'));
-  const protocol = process.env.VERCEL ? 'https' : (req.headers['x-forwarded-proto'] || (String(host).startsWith('localhost') ? 'http' : 'https'));
-  webhookSetup = connectTelegramWebhook(`${protocol}://${host}`).catch(error => {
+  const origin = publicOrigin(req);
+  if (!origin) return Promise.reject(new Error('Domain aplikasi belum tersedia.'));
+  webhookSetup = connectTelegramWebhook(origin).catch(error => {
     webhookSetup = null;
     throw error;
   });

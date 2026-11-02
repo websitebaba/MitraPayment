@@ -1,4 +1,4 @@
-const {json,validChatId,cleanText,redis,getMessages,appendMessage,connectTelegramWebhook} = require('./_chat');
+const {json,validChatId,cleanText,redis,getMessages,appendMessage,connectTelegramWebhook,publicOrigin} = require('./_chat');
 function authorized(req) {
   const expected = process.env.CHAT_ADMIN_TOKEN;
   const header = req.headers.authorization || '';
@@ -25,11 +25,10 @@ module.exports = async (req, res) => {
     if (req.method === 'POST') {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
       if (body.action === 'connectTelegram') {
-        const host = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || req.headers['x-forwarded-host'] || req.headers.host;
-        if (!host) return json(res,400,{error:'Domain aplikasi belum tersedia.'});
-        const protocol = process.env.VERCEL ? 'https' : (req.headers['x-forwarded-proto'] || (String(host).startsWith('localhost') ? 'http' : 'https'));
+        const origin = publicOrigin(req);
+        if (!origin) return json(res,400,{error:'Domain aplikasi belum tersedia.'});
         try {
-          const webhookUrl = await connectTelegramWebhook(`${protocol}://${host}`);
+          const webhookUrl = await connectTelegramWebhook(origin);
           return json(res,200,{ok:true,webhookUrl});
         } catch (error) {
           console.error('Telegram setup failed:', error);
