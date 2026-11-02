@@ -15,10 +15,6 @@ module.exports = async (req, res) => {
       await appendMessage(chatId, {from:'visitor',text,at:Date.now()});
       let telegramNotified = false;
       try {
-        const origin = requestOrigin(req);
-        if (origin && telegramConfig() && !/localhost|127\.0\.0\.1/.test(origin)) {
-          await connectTelegramWebhook(origin);
-        }
         telegramNotified = await notifyTelegram(chatId, text);
       } catch (error) {
         console.error('Telegram notification failed:', error);

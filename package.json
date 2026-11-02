@@ -2,6 +2,6 @@
   "name": "davpay-indonesia",
   "private": true,
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node --env-file-if-exists=/vercel/share/.env.project server.js"
   }
 }
