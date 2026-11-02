@@ -1214,7 +1214,7 @@ menuBtn.setAttribute('aria-label', opened ? 'Tutup menu' : 'Buka menu');
 menuBtn.classList.toggle('is-open', opened);
   });
 navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', (event) => {
-if (link.dataset.openTopup === 'true') { event.preventDefault(); openTopup(); }
+if (link.dataset.openTopup === 'true') { event.preventDefault(); document.getElementById('openTopup')?.click(); }
 navLinks.classList.remove('open');
 menuBtn.setAttribute('aria-expanded', 'false');
 menuBtn.setAttribute('aria-label', 'Buka menu');
