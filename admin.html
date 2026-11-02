@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f6fa">
+<title>Admin Live Chat — Mitra Payment</title>
+<style>
+:root{--red:#ed1c2e;--ink:#202735;--muted:#718096;--line:#e8ebf1;--bg:#f5f6fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:14px/1.5 Arial,sans-serif;color:var(--ink)}
+.wrap{max-width:1080px;margin:28px auto;padding:0 16px}
+h1{font-size:23px;margin:0 0 5px}.sub{color:var(--muted);margin:0 0 20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 5px 20px #20273508}
+.login{display:flex;gap:9px}.login input{flex:1;min-width:0}
+input,button{font:inherit;border-radius:10px;padding:11px 13px}
+input{border:1px solid #dce1e9;outline:none}input:focus{border-color:#ed1c2e;box-shadow:0 0 0 3px #ed1c2e14}
+button{border:0;background:var(--red);color:white;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+#status{min-height:22px;color:var(--muted);font-size:12px;margin:12px 2px}
+#chats[hidden],#telegramPanel[hidden]{display:none!important}
+#chats{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.7fr);gap:14px}
+.panel-title{font-weight:800;margin:0 0 12px}
+#list{display:flex;flex-direction:column;gap:7px;max-height:590px;overflow:auto}
+.chat-item{width:100%;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.chat-item.active{border-color:var(--red);background:#fff5f6}
+.chat-item small{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:3px}
+.chat-empty{color:var(--muted);font-size:13px;padding:12px 2px}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+#msgs{height:min(55vh,500px);min-height:260px;overflow:auto;background:#f7f8fb;padding:13px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:84%;background:#fff;border:1px solid #edf0f4;padding:10px 12px;border-radius:12px;overflow-wrap:anywhere}
+.bubble.admin{align-self:flex-end;background:#ffecef;border-color:#ffdade}
+.bubble small{display:block;color:#8992a0;font-size:10px;margin-top:5px}
+.send{display:flex;gap:8px;margin-top:11px}.send input{flex:1;min-width:0}
+.secondary{background:#eef1f5;color:#394456}
+@media(max-width:680px){.wrap{margin:18px auto}#chats{grid-template-columns:1fr}.login{flex-direction:column}#list{max-height:210px}.chat-head{align-items:flex-start}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Admin Live Chat</h1>
+  <p class="sub">Kelola percakapan pengunjung Mitra Payment.</p>
+  <section class="card login" aria-label="Login admin">
+    <input id="token" type="password" autocomplete="current-password" placeholder="Masukkan CHAT_ADMIN_TOKEN" aria-label="CHAT_ADMIN_TOKEN">
+    <button id="connect" type="button">Masuk</button>
+  </section>
+  <p id="status" role="status" aria-live="polite">Masukkan token admin untuk melihat percakapan.</p>
+  <section class="card" id="telegramPanel" hidden style="margin:14px 0;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+    <div><strong>Chat dua arah via Telegram</strong><p style="margin:5px 0 0;color:#657084;font-size:13px">Aktifkan webhook bot. Pesan pengunjung diteruskan ke Telegram; balas pesan bot menggunakan Reply.</p></div>
+    <button id="telegramConnect" type="button">Aktifkan Telegram</button>
+  </section>
+  <section class="card" id="depositsPanel" hidden style="margin:14px 0"><p class="panel-title">Bukti Top Up Masuk</p><div id="depositsList"><div class="chat-empty">Belum ada bukti top up.</div></div></section>
+  <section id="chats" hidden>
+    <div class="card">
+      <p class="panel-title">Daftar percakapan</p>
+      <div id="list"><div class="chat-empty">Belum ada percakapan.</div></div>
+      <button class="secondary" id="logout" type="button" style="width:100%;margin-top:12px">Keluar</button>
+    </div>
+    <div class="card">
+      <div class="chat-head"><strong id="title">Pilih percakapan</strong><small id="count"></small></div>
+      <div id="msgs" aria-live="polite"><div class="chat-empty">Pilih percakapan di sebelah kiri.</div></div>
+      <form class="send" id="send">
+        <input id="reply" maxlength="1000" placeholder="Tulis balasan…" autocomplete="off" required>
+        <button id="sendButton" type="submit">Kirim</button>
+      </form>
+    </div>
+  </section>
+</main>
+<script>
+(()=> {
+  const $=id=>document.getElementById(id);
+  let token='',selected='',poller=null,busy=false;
+  const escTime=at=>{try{return new Date(at).toLocaleString('id-ID',{dateStyle:'short',timeStyle:'short'})}catch{return ''}};
+  function showMessages(rows){
+    $('msgs').replaceChildren();
+    if(!rows.length){$('msgs').textContent='Belum ada pesan.';return}
+    rows.forEach(m=>{
+      const d=document.createElement('div');d.className='bubble '+(m.from==='admin'?'admin':'');
+      d.append(document.createTextNode(m.text||''));
+      const small=document.createElement('small');
+      small.textContent=(m.from==='admin'?'Admin':'Pengunjung')+' · '+escTime(m.at);
+      d.append(small);$('msgs').append(d);
+    });
+    $('msgs').scrollTop=$('msgs').scrollHeight;
+  }
+  async function api(url,options={}){
+    const r=await fetch(url,{...options,headers:{...(options.headers||{}),authorization:'Bearer '+token}});
+    const j=await r.json().catch(()=>({error:'Respons server tidak valid'}));
+    if(!r.ok)throw Error(j.error||('HTTP '+r.status));
+    return j;
+  }
+  async function load(){
+    const j=await api('/api/admin');
+    const list=$('list');list.replaceChildren();
+    if(!j.chats?.length){const e=document.createElement('div');e.className='chat-empty';e.textContent='Belum ada percakapan masuk.';list.append(e)}
+    const deposits=$('depositsList'); deposits.replaceChildren();
+    if(!j.deposits?.length){const e=document.createElement('div');e.className='chat-empty';e.textContent='Belum ada bukti top up masuk.';deposits.append(e)}
+    (j.deposits||[]).forEach(d=>{const box=document.createElement('div');box.className='chat-item';const title=document.createElement('b');title.textContent=d.id+' · '+d.status;const detail=document.createElement('small');detail.textContent='ID Akun: '+d.accountId+' · '+d.method+' · Rp'+Number(d.amount).toLocaleString('id-ID')+' · '+escTime(d.createdAt);const note=document.createElement('small');note.textContent='Keterangan: '+(d.note||'-');box.append(title,detail,note);if(d.proof){const img=document.createElement('img');img.src=d.proof;img.alt='Bukti pembayaran '+d.id;img.style='display:block;max-width:100%;max-height:240px;object-fit:contain;margin-top:10px;border-radius:10px;background:#fff';box.append(img)}deposits.append(box)});
+    $('depositsPanel').hidden=false;
+    (j.chats||[]).forEach(c=>{
+      const b=document.createElement('button');b.type='button';b.className='chat-item'+(c.chatId===selected?' active':'');
+      const name=c.messages?.[0]?.name||'Pengunjung';
+      b.append(document.createTextNode(name));
+      const sm=document.createElement('small');sm.textContent=(c.messages?.length||0)+' pesan · '+String(c.chatId).slice(0,12);b.append(sm);
+      b.onclick=()=>{selected=c.chatId;$('title').textContent='Percakapan '+selected.slice(0,12);$('count').textContent=(c.messages?.length||0)+' pesan';showMessages(c.messages||[]);load().catch(()=>{})};
+      list.append(b);
+    });
+    if(selected){
+      const c=(j.chats||[]).find(x=>x.chatId===selected);
+      if(c){$('title').textContent='Percakapan '+selected.slice(0,12);$('count').textContent=c.messages.length+' pesan';showMessages(c.messages)}
+      else {selected='';$('title').textContent='Pilih percakapan';$('count').textContent='';$('msgs').textContent='Pilih percakapan di sebelah kiri.'}
+    }
+  }
+  $('connect').onclick=async()=>{
+    token=$('token').value.trim();if(!token){$('status').textContent='Token wajib diisi.';return}
+    $('connect').disabled=true;
+    try{await load();$('chats').hidden=false;$('telegramPanel').hidden=false;$('status').textContent='Terhubung. Daftar diperbarui otomatis setiap 4 detik.';$('token').value='';$('token').disabled=true;$('connect').hidden=true;poller=setInterval(()=>load().catch(e=>$('status').textContent=e.message),4000)}
+    catch(e){$('status').textContent='Gagal masuk: '+e.message;token=''}
+    finally{$('connect').disabled=false}
+  };
+  $('send').onsubmit=async e=>{
+    e.preventDefault();const text=$('reply').value.trim();if(!selected||!text||busy)return;
+    busy=true;$('sendButton').disabled=true;
+    try{await api('/api/admin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chatId:selected,text})});$('reply').value='';await load();$('status').textContent='Balasan berhasil dikirim.'}
+    catch(err){$('status').textContent='Balasan gagal dikirim: '+err.message}
+    finally{busy=false;$('sendButton').disabled=false}
+  };
+  $('telegramConnect').onclick=async()=>{
+    const button=$('telegramConnect');button.disabled=true;
+    try{await api('/api/admin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'connectTelegram'})});$('status').textContent='Webhook aktif. Kirim pesan ke bot lalu balas notifikasi dengan fitur Reply.'}
+    catch(error){$('status').textContent='Telegram belum aktif: '+error.message}
+    finally{button.disabled=false}
+  };
+  $('logout').onclick=()=>{if(poller)clearInterval(poller);poller=null;token='';selected='';$('chats').hidden=true;$('telegramPanel').hidden=true;$('token').disabled=false;$('token').value='';$('connect').hidden=false;$('status').textContent='Anda sudah keluar.'};
+})();
+</script>
+</body>
+</html>
