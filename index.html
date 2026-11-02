@@ -1408,7 +1408,7 @@ footer{background:#202124;border-top:4px solid #1a73e8}
   <img id="depositPreview" class="deposit-preview" alt="Pratinjau bukti pembayaran" hidden>
   <label class="deposit-note-label" for="depositNote">Keterangan tambahan (opsional)</label>
   <textarea id="depositNote" rows="3" maxlength="500" placeholder="Tuliskan keterangan transaksi jika diperlukan..."></textarea>
-  <button class="topup-primary" id="sendDepositProof" type="button">Kirim Bukti ke Pusat Layanan</button>
+  <button class="topup-primary" id="sendDepositProof" type="button">Kirim Bukti ke Telegram & Pusat Layanan</button>
   <p class="deposit-feedback" id="depositFeedback" role="status" aria-live="polite"></p>
 </section>
 <section class="deposit-pending-card" id="depositPendingCard" hidden>
@@ -1596,7 +1596,7 @@ menuBtn.classList.remove('is-open');
         pendingCard.scrollIntoView({behavior:'smooth',block:'center'});
       } catch(error) {
         feedback.textContent = error.message.includes('Failed to fetch') ? 'Tidak dapat terhubung ke pusat layanan. Pastikan website sudah di-deploy ke Vercel.' : error.message;
-      } finally { button.disabled=false; button.textContent='Kirim Bukti ke Pusat Layanan'; }
+      } finally { button.disabled=false; button.textContent='Kirim Bukti ke Telegram & Pusat Layanan'; }
     });
     document.getElementById('restartTopup').addEventListener('click', () => showPage('form'));
     document.querySelectorAll('.preset').forEach(button => {
