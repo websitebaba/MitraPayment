@@ -5,7 +5,8 @@ const CHAT_ID_RE = /^[a-zA-Z0-9_-]{8,100}$/;
 const TELEGRAM_API = 'https://api.telegram.org';
 
 function publicOrigin(req) {
-  const configured = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || req?.headers?.['x-forwarded-host'] || req?.headers?.host;
+  // Use the current deployment host first so preview traffic never registers Telegram on an older production deployment.
+  const configured = req?.headers?.['x-forwarded-host'] || process.env.VERCEL_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || req?.headers?.host;
   if (!configured) return '';
   const value = String(configured).trim();
   if (/^https?:\/\//i.test(value)) return value.replace(/\/+$/, '');
@@ -14,10 +15,11 @@ function publicOrigin(req) {
 }
 
 function telegramConfig() {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const adminChatId = process.env.TELEGRAM_CHAT_ID;
+  const rawToken = String(process.env.TELEGRAM_BOT_TOKEN || '').trim();
+  const token = rawToken.replace(/^bot/i, '');
+  const adminChatId = String(process.env.TELEGRAM_CHAT_ID || '').trim();
   if (!token || !adminChatId) return null;
-  return { token, adminChatId: String(adminChatId) };
+  return { token, adminChatId };
 }
 function telegramWebhookSecret(token) {
   return createHmac('sha256', token).update('mitra-payment-telegram-webhook-v1').digest('hex');
