@@ -5,10 +5,15 @@ const CHAT_ID_RE = /^[a-zA-Z0-9_-]{8,100}$/;
 const TELEGRAM_API = 'https://api.telegram.org';
 
 function publicOrigin(req) {
-  // Use the current deployment host first so preview traffic never registers Telegram on an older production deployment.
-  const configured = req?.headers?.['x-forwarded-host'] || process.env.VERCEL_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || req?.headers?.host;
+  // Prefer Vercel's canonical deployment URL. Forwarded headers can point at a local
+  // preview proxy, which would register Telegram against an unreachable webhook.
+  const configured = process.env.VERCEL_URL
+    || process.env.VERCEL_PROJECT_PRODUCTION_URL
+    || req?.headers?.['x-forwarded-host']
+    || req?.headers?.host;
   if (!configured) return '';
-  const value = String(configured).trim();
+  const value = String(configured).split(',')[0].trim();
+  if (!value) return '';
   if (/^https?:\/\//i.test(value)) return value.replace(/\/+$/, '');
   const protocol = process.env.VERCEL || !/^localhost(?::\d+)?$/i.test(value) ? 'https' : 'http';
   return `${protocol}://${value}`;
