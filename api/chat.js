@@ -1,4 +1,10 @@
-const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram} = require('./_chat');
+const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram,connectTelegramWebhook,telegramConfig} = require('./_chat');
+
+function requestOrigin(req) {
+  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  return host ? `${protocol}://${host}` : '';
+}
 module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
@@ -15,6 +21,10 @@ module.exports = async (req, res) => {
       await appendMessage(chatId, {from:'visitor',text,at:Date.now()});
       let telegramNotified = false;
       try {
+        const origin = requestOrigin(req);
+        if (origin && telegramConfig() && !/localhost|127\.0\.0\.1/.test(origin)) {
+          await connectTelegramWebhook(origin);
+        }
         telegramNotified = await notifyTelegram(chatId, text);
       } catch (error) {
         console.error('Telegram notification failed:', error);
