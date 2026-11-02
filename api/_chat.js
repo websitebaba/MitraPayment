@@ -36,7 +36,10 @@ async function telegramRequest(token, method, payload) {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.ok) {
-        const error = new Error(data.description || `Telegram ${method} gagal.`);
+        const description = data.description || `Telegram ${method} gagal.`;
+        const error = new Error(description.includes("bot can't initiate conversation") || description.includes('chat not found')
+          ? `${description} Pastikan akun admin sudah membuka bot dan mengirim /start, serta TELEGRAM_CHAT_ID benar.`
+          : description);
         if (response.status >= 400 && response.status < 500) throw error;
         lastError = error;
         continue;
