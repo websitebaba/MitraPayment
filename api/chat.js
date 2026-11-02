@@ -28,13 +28,15 @@ module.exports = async (req, res) => {
       if (!text) return json(res, 400, {error:'Pesan tidak boleh kosong.'});
       await appendMessage(chatId, {from:'visitor',text,at:Date.now()});
       let telegramNotified = false;
+      let telegramError = '';
       try {
         await ensureTelegramWebhook(req);
-      telegramNotified = await notifyTelegram(chatId, text);
+        telegramNotified = await notifyTelegram(chatId, text);
       } catch (error) {
+        telegramError = error instanceof Error ? error.message : 'Telegram tidak dapat dihubungi.';
         console.error('Telegram notification failed:', error);
       }
-      return json(res, 200, {ok:true,telegramNotified});
+      return json(res, 200, {ok:true,telegramNotified,telegramError});
     }
     res.setHeader('Allow','GET, POST');
     return json(res, 405, {error:'Metode tidak diizinkan.'});
