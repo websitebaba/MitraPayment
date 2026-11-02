@@ -1672,5 +1672,16 @@ form.onsubmit=async e=>{if(e.isComposing||e.keyCode===229)return;e.preventDefaul
     }
   });
 </script>
+<script>
+  (() => {
+    const davpayPromo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png';
+    document.querySelectorAll('.promo-slide img').forEach((image, index) => {
+      if (index > 0) {
+        image.src = davpayPromo;
+        image.alt = 'Banner promosi DAVPAY Indonesia';
+      }
+    });
+  })();
+</script>
 </body>
 </html>
