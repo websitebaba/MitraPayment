@@ -1,10 +1,4 @@
-const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram,connectTelegramWebhook,telegramConfig} = require('./_chat');
-
-function requestOrigin(req) {
-  const protocol = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  return host ? `${protocol}://${host}` : '';
-}
+const {json,validChatId,cleanText,appendMessage,getMessages,notifyTelegram} = require('./_chat');
 module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
