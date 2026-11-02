@@ -18,7 +18,7 @@ async function telegramRequest(token, method, payload) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(4000)
+    signal: AbortSignal.timeout(10000)
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok || !data.ok) throw new Error(data.description || `Telegram ${method} gagal.`);
@@ -43,10 +43,6 @@ async function connectTelegramWebhook(origin) {
     secret_token: telegramWebhookSecret(config.token),
     allowed_updates: ['message'],
     drop_pending_updates: false
-  });
-  await telegramRequest(config.token, 'sendMessage', {
-    chat_id: config.adminChatId,
-    text: 'Chat dua arah Mitra Payment aktif. Balas notifikasi pesan website dengan fitur Reply.'
   });
   return url;
 }
