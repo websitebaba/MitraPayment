@@ -1656,5 +1656,13 @@ launchers.forEach(button=>{button.onclick=()=>{box.classList.add('open');launche
 form.onsubmit=async e=>{if(e.isComposing||e.keyCode===229)return;e.preventDefault();if(busy)return;const text=input.value.trim();if(!text)return;busy=true;try{const r=await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chatId:id,text})});const j=await r.json();if(!r.ok)throw Error(j.error||'Gagal mengirim');input.value='';await refresh();status.textContent=j.telegramNotified===false?`Pesan tersimpan, tetapi Telegram belum menerima. ${j.telegramError||'Pastikan bot sudah dimulai dengan /start dan Chat ID benar.'}`:'Pesan berhasil dikirim ke Telegram. Balasan admin akan muncul di sini.'}catch(err){status.textContent=err.message||'Pesan belum terkirim'}finally{busy=false}};
 })();
 </script>
+<script>
+  (() => {
+    const replacementBanner = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png";
+    document.querySelectorAll('.promo-slide img').forEach((image) => {
+      if (image.src.startsWith('data:image/')) image.src = replacementBanner;
+    });
+  })();
+</script>
 </body>
 </html>
