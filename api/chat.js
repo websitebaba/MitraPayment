@@ -29,8 +29,15 @@ module.exports = async (req, res) => {
       let telegramNotified = false;
       let telegramError = '';
       try {
-        await ensureTelegramWebhook(req);
+        // Deliver the visitor message first. Webhook registration is only needed for replies
+        // and must not prevent an outbound notification when the deployment URL is unavailable.
         telegramNotified = await notifyTelegram(chatId, text);
+        try {
+          await ensureTelegramWebhook(req);
+        } catch (error) {
+          telegramError = error instanceof Error ? error.message : 'Webhook Telegram belum tersambung.';
+          console.error('Telegram webhook setup failed:', error);
+        }
       } catch (error) {
         telegramError = error instanceof Error ? error.message : 'Telegram tidak dapat dihubungi.';
         console.error('Telegram notification failed:', error);
