@@ -25,15 +25,32 @@ function telegramWebhookSecret(token) {
   return createHmac('sha256', token).update('mitra-payment-telegram-webhook-v1').digest('hex');
 }
 async function telegramRequest(token, method, payload) {
-  const response = await fetch(`${TELEGRAM_API}/bot${token}/${method}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(10000)
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok || !data.ok) throw new Error(data.description || `Telegram ${method} gagal.`);
-  return data.result;
+  let lastError;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(`${TELEGRAM_API}/bot${token}/${method}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(10000)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) {
+        const error = new Error(data.description || `Telegram ${method} gagal.`);
+        if (response.status >= 400 && response.status < 500) throw error;
+        lastError = error;
+        continue;
+      }
+      return data.result;
+    } catch (error) {
+      if (error?.name === 'AbortError' || error?.name === 'TimeoutError' || error?.message?.includes('fetch')) {
+        lastError = error;
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw lastError || new Error(`Telegram ${method} gagal.`);
 }
 async function sendAdminTelegram(text) {
   const config = telegramConfig();
