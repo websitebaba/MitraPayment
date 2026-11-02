@@ -19,7 +19,9 @@ const contentTypes = {
 const server = http.createServer((request, response) => {
   const requestedPath = decodeURIComponent(request.url.split('?')[0])
   const safePath = requestedPath === '/' ? '/index.html' : requestedPath
-  const filePath = path.resolve(root, `.${safePath}`)
+  const directPath = path.resolve(root, `.${safePath}`)
+  const publicPath = path.resolve(root, `./public${safePath}`)
+  const filePath = fs.existsSync(directPath) ? directPath : publicPath
 
   if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
