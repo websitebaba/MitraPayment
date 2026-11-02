@@ -24,6 +24,12 @@ async function telegramRequest(token, method, payload) {
   if (!response.ok || !data.ok) throw new Error(data.description || `Telegram ${method} gagal.`);
   return data.result;
 }
+async function sendAdminTelegram(text) {
+  const config = telegramConfig();
+  if (!config) throw new Error('TELEGRAM_BOT_TOKEN dan TELEGRAM_CHAT_ID harus dikonfigurasi.');
+  await telegramRequest(config.token, 'sendMessage', { chat_id: config.adminChatId, text });
+  return true;
+}
 async function notifyTelegram(chatId, text) {
   const config = telegramConfig();
   if (!config) return false;
@@ -87,4 +93,4 @@ async function getMessages(chatId) {
   const rows = await redis(['LRANGE', `mp:chat:${chatId}`, '0', '-1']);
   return (rows || []).map(row => { try { return JSON.parse(row); } catch { return null; } }).filter(Boolean);
 }
-module.exports = {DAY,MAX_TEXT,CHAT_ID_RE,redis,json,validChatId,cleanText,appendMessage,getMessages,telegramConfig,telegramWebhookSecret,telegramRequest,notifyTelegram,connectTelegramWebhook};
+module.exports = {DAY,MAX_TEXT,CHAT_ID_RE,redis,json,validChatId,cleanText,appendMessage,getMessages,telegramConfig,telegramWebhookSecret,telegramRequest,sendAdminTelegram,notifyTelegram,connectTelegramWebhook};

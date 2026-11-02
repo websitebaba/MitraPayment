@@ -1,4 +1,4 @@
-const {json,redis} = require('./_chat');
+const {json,redis,sendAdminTelegram} = require('./_chat');
 const MAX_IMAGE_CHARS = 1800000;
 module.exports = async (req,res) => {
   if (req.method !== 'POST') { res.setHeader('Allow','POST'); return json(res,405,{error:'Metode tidak diizinkan.'}); }
@@ -12,6 +12,15 @@ module.exports = async (req,res) => {
     await redis(['LPUSH','mp:deposits',id]);
     await redis(['LTRIM','mp:deposits',0,199]);
     await redis(['EXPIRE','mp:deposits',60*60*24*30]);
-    return json(res,200,{ok:true,id});
-  } catch(error) { console.error('Deposit submission:',error); return json(res,500,{error:'Pusat layanan belum dapat menerima bukti. Periksa konfigurasi Redis Vercel.'}); }
+    await sendAdminTelegram([
+      'Formulir top up baru dari website DAVPAY',
+      `ID: ${id}`,
+      `Akun: ${item.accountId}`,
+      `Nominal: Rp${item.amount.toLocaleString('id-ID')}`,
+      `Metode: ${item.method}`,
+      `Catatan: ${item.note || '-'}`,
+      'Bukti pembayaran tersimpan di panel admin.'
+    ].join('\\n'));
+    return json(res,200,{ok:true,id,telegramNotified:true});
+  } catch(error) { console.error('Deposit submission:',error); return json(res,500,{error:'Formulir tersimpan sebagian, tetapi belum berhasil diteruskan ke Telegram. Periksa konfigurasi Redis dan Telegram.'}); }
 };
