@@ -18,6 +18,7 @@ function loadProjectEnv() {
 }
 
 loadProjectEnv()
+// Load project-managed variables before any serverless handler is required.
 const port = Number(process.env.PORT || 3000)
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',

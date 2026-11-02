@@ -1675,7 +1675,7 @@ menuBtn.classList.remove('is-open');
     });
   })();
 
-  // Three-step order form with EmailJS notification.
+  // Three-step order form with server-side Telegram notification.
   (() => {
     const form = document.getElementById('orderWizardForm');
     if (!form) return;
@@ -1687,10 +1687,6 @@ menuBtn.classList.remove('is-open');
     const previewName = preview.querySelector('b');
     let orderData = null;
     let orderRef = '';
-    const EMAILJS_PUBLIC_KEY = 'jR4LynolkbaX7dBU1';
-    const EMAILJS_SERVICE_ID = 'service_istzwye';
-    const EMAILJS_TEMPLATE_ID = 'template_l7fjy2h';
-    if (window.emailjs) emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
     const show = n => {
       pages.forEach(p => p.hidden = Number(p.dataset.page) !== n);
       progress.forEach((p,i) => {
@@ -1736,26 +1732,16 @@ menuBtn.classList.remove('is-open');
       submitButton.disabled=true;
       submitButton.textContent='Mengirim konfirmasi…';
       try {
-        if(!window.emailjs) throw new Error('Layanan email belum termuat. Periksa koneksi internet.');
-        const params = {
-          order_reference: orderRef,
-          seller_name: orderData.sellerName,
-          seller_email: orderData.sellerEmail,
-          seller_phone: orderData.sellerPhone,
-          sender_address: orderData.senderAddress,
-          buyer_name: orderData.buyerName,
-          buyer_email: orderData.buyerEmail,
-          buyer_phone: orderData.buyerPhone,
-          delivery_address: orderData.deliveryAddress,
-          product_name: orderData.productName,
-          product_price: Number(orderData.productPrice).toLocaleString('id-ID'),
-          payment_method: orderData.orderPayment,
-          courier_name: orderData.courier,
-          terms_accepted: orderData.termsAccepted ? 'Ya' : 'Tidak'
-        };
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, {publicKey: EMAILJS_PUBLIC_KEY});
+        const response = await fetch('/api/order', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(orderData)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Pesanan belum berhasil dikirim.');
+        orderRef = result.orderRef || orderRef;
         document.getElementById('orderReference').textContent=orderRef;
-        status.textContent='Konfirmasi pesanan berhasil dikirim melalui email. Silakan cek Inbox, Spam, atau Promosi.';
+        status.textContent='Pesanan berhasil dikirim ke admin melalui Telegram.';
         show(3);
         drawReceipt();
       } catch(err) {
