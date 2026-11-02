@@ -1,4 +1,4 @@
-# Mitra Payment — Live Chat dan Telegram
+# DAVPAY INDONESIA — Live Chat dan Telegram
 
 Website ini memiliki widget chat pengunjung dan panel admin di `/admin.html`. Pesan dan balasan disimpan di Upstash Redis selama 30 hari.
 
