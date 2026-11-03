@@ -1642,20 +1642,19 @@ openBtn.addEventListener('click', event => {
   show(0);
   restart();
 })();
-</script><style>
-#mpChatLauncher{position:fixed;right:18px;bottom:18px;z-index:9998;width:54px;height:54px;display:grid;place-items:center;border:0;border-radius:50%;background:linear-gradient(135deg,#d93025,#b3261e);color:#fff;padding:0;box-shadow:0 8px 28px rgba(185,38,30,.3);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}#mpChatLauncher:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(185,38,30,.4)}#mpChatLauncher svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}#mpChatBox{position:fixed;right:18px;bottom:82px;width:min(360px,calc(100vw - 28px));height: min(500px,calc(100dvh - 110px));z-index:9999;background:#fff;border:1px solid #e9edf3;border-radius:18px;box-shadow:0 18px 55px #17203335;display:none;overflow:hidden;font-family:Arial,sans-serif;color:#202735}#mpChatBox.open{display:flex;flex-direction:column}.mpch-head{background:#1a73e8;color:#fff;padding:15px 16px;display:flex;justify-content:space-between;align-items:center}.mpch-head small{display:block;opacity:.85;margin-top:4px}.mpch-head button{background:none;color:white;border:0;font-size:24px}.mpch-msgs{padding:14px;overflow:auto;flex:1;background:#f7f8fb;display:flex;flex-direction:column;gap:9px}.mpch-bubble{max-width:85%;padding:10px 12px;border-radius:13px;background:#fff;box-shadow:0 1px 3px #0000000d;font-size:13px;line-height:1.45;overflow-wrap:anywhere}.mpch-bubble.mine{align-self:flex-end;background:#ffecef}.mpch-bubble small{display:block;color:#7b8493;font-size:10px;margin-top:5px}.mpch-form{display:flex;gap:8px;padding:11px;border-top:1px solid #edf0f4}.mpch-form input{min-width:0;flex:1;border:1px solid #dfe4ec;border-radius:22px;padding:11px 13px;font-size:14px}.mpch-form button{border:0;border-radius:22px;background:#1a73e8;color:white;padding:0 16px;font-weight:700}.mpch-note{font-size:10px;color:#7b8493;text-align:center;padding:5px}
-@media (max-width:560px){#mpChatLauncher{right:12px;bottom:76px;width:48px;height:48px}#mpChatBox{right:12px;bottom:76px;width:calc(100vw - 24px)}}
-</style>
-<button aria-label="Buka Live Chat DAVPAY INDONESIA" id="mpChatLauncher" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.7 8.7 0 0 1-3.5-.7L4 20l1.7-3.4A7.3 7.3 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z"/><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/></svg></button>
-<section aria-label="Live chat support" id="mpChatBox"><header class="mpch-head"><div><strong>Admin DAVPAY INDONESIA</strong><small>Balasan admin masuk dari Telegram</small></div><button aria-label="Tutup" id="mpChatClose">×</button></header><div class="mpch-msgs" id="mpChatMessages"><div class="mpch-bubble">Halo! Selamat datang di DAVPAY INDONESIA. Ada yang bisa kami bantu?</div></div><div class="mpch-note" id="mpChatStatus">Hubungkan ke layanan chat untuk mengirim pesan.</div><form class="mpch-form" id="mpChatForm"><input autocomplete="off" id="mpChatInput" maxlength="1000" placeholder="Tulis pesan Anda…" required=""/><button type="submit">Kirim</button></form></section>
-<script>
-(()=>{const box=document.getElementById('mpChatBox'),launchers=document.querySelectorAll('#mpChatLauncher'),close=document.getElementById('mpChatClose'),form=document.getElementById('mpChatForm'),input=document.getElementById('mpChatInput'),msgs=document.getElementById('mpChatMessages'),status=document.getElementById('mpChatStatus');let id=localStorage.getItem('mp_chat_id');if(!id){id='mp'+crypto.randomUUID().replaceAll('-','');localStorage.setItem('mp_chat_id',id)}let busy=false;
-function render(rows){msgs.innerHTML='';if(!rows.length){msgs.innerHTML='<div class="mpch-bubble">Halo! Selamat datang di DAVPAY INDONESIA. Ada yang bisa kami bantu?</div>';return}rows.forEach(m=>{const d=document.createElement('div');d.className='mpch-bubble '+(m.from==='visitor'?'mine':'');d.textContent=m.text;const sm=document.createElement('small');sm.textContent=(m.from==='visitor'?'Anda':'Admin')+' • '+new Date(m.at).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});d.appendChild(sm);msgs.appendChild(d)});msgs.scrollTop=msgs.scrollHeight}
-async function refresh(){try{const r=await fetch('/api/chat?chatId='+encodeURIComponent(id));if(!r.ok)throw Error();const j=await r.json();render(j.messages||[]);status.textContent='Chat tersinkron. Balasan admin akan muncul di sini.'}catch(e){status.textContent='Chat belum terhubung. Pastikan backend sudah dipasang.'}}
-launchers.forEach(button=>{button.onclick=()=>{box.classList.add('open');launchers.forEach(item=>{item.style.display='none'});refresh()}});close.onclick=()=>{box.classList.remove('open');launchers.forEach(item=>{item.style.display='block'})};setInterval(()=>{if(box.classList.contains('open'))refresh()},4000);
-form.onsubmit=async e=>{if(e.isComposing||e.keyCode===229)return;e.preventDefault();if(busy)return;const text=input.value.trim();if(!text)return;busy=true;try{const r=await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chatId:id,text})});const j=await r.json();if(!r.ok)throw Error(j.error||'Gagal mengirim');input.value='';await refresh();status.textContent=j.telegramNotified===false?`Pesan tersimpan, tetapi Telegram belum menerima. ${j.telegramError||'Pastikan bot sudah dimulai dengan /start dan Chat ID benar.'}`:'Pesan berhasil dikirim ke Telegram. Balasan admin akan muncul di sini.'}catch(err){status.textContent=err.message||'Pesan belum terkirim'}finally{busy=false}};
+</script><!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6ad2e58da9c1f634c60be96d/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
+<!--End of Tawk.to Script-->
 <script>
   (() => {
     const replacementBanner = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png";
