@@ -907,6 +907,20 @@ footer{background:#202124;border-top:4px solid #1a73e8}
 </div>
 <div class="wizard-page" data-page="2" hidden="">
 <div class="wizard-section-title"><span>03</span><div><h3>Informasi Produk &amp; Pembayaran</h3><p>Masukkan rincian barang dan pilih metode transaksi.</p></div></div>
+<div aria-label="Pilihan logo ekspedisi" class="courier-logo-picker">
+<label><input type="radio" name="courierLogo" value="JNE Express"/><span class="courier-logo-card logo-jne-express"><b>JNE Express</b></span></label>
+<label><input type="radio" name="courierLogo" value="SiCepat"/><span class="courier-logo-card logo-sicepat"><b>SiCepat</b></span></label>
+<label><input type="radio" name="courierLogo" value="J&amp;T Express"/><span class="courier-logo-card logo-jt-express"><b>J&amp;T Express</b></span></label>
+<label><input type="radio" name="courierLogo" value="SAPX"/><span class="courier-logo-card logo-sapx"><b>SAPX</b></span></label>
+<label><input type="radio" name="courierLogo" value="Lion Parcel"/><span class="courier-logo-card logo-lion-parcel"><b>Lion Parcel</b></span></label>
+<label><input type="radio" name="courierLogo" value="ID Express"/><span class="courier-logo-card logo-id-express"><b>ID Express</b></span></label>
+<label><input type="radio" name="courierLogo" value="Maxim"/><span class="courier-logo-card logo-maxim"><b>Maxim</b></span></label>
+<label><input type="radio" name="courierLogo" value="SPX Express"/><span class="courier-logo-card logo-spx-express"><b>SPX Express</b></span></label>
+<label><input type="radio" name="courierLogo" value="Paxel"/><span class="courier-logo-card logo-paxel"><b>Paxel</b></span></label>
+<label><input type="radio" name="courierLogo" value="GoSend"/><span class="courier-logo-card logo-gosend"><b>GoSend</b></span></label>
+<label><input type="radio" name="courierLogo" value="AnterAja"/><span class="courier-logo-card logo-anteraja"><b>AnterAja</b></span></label>
+<label><input type="radio" name="courierLogo" value="GrabExpress"/><span class="courier-logo-card logo-grabexpress"><b>GrabExpress</b></span></label>
+</div>
 <div class="wizard-fields">
 <label class="wide"><span class="field-icon material-symbols-rounded" aria-hidden="true">inventory_2</span><input name="productName" placeholder="Nama produk" required=""/></label>
 <label><span class="field-icon material-symbols-rounded" aria-hidden="true">payments</span><input min="1" name="productPrice" placeholder="Harga produk (Rp)" required="" step="1" type="number"/></label>
@@ -1454,6 +1468,7 @@ openBtn.addEventListener('click', event => {
     const preview = document.getElementById('courierPreview');
     const previewLogo = preview.querySelector('.courier-logo');
     const previewName = preview.querySelector('b');
+    const courierLogoPicker = document.querySelector('.courier-logo-picker');
     let orderData = null;
     let orderRef = '';
     const show = n => {
@@ -1477,8 +1492,14 @@ openBtn.addEventListener('click', event => {
       if(validPage(current)) show(Number(b.dataset.next));
     }));
     document.querySelectorAll('[data-prev]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.prev))));
+    courierLogoPicker?.querySelectorAll('input').forEach(input=>input.addEventListener('change',()=>{
+      courier.value = input.value;
+      courier.dispatchEvent(new Event('change', {bubbles:true}));
+    }));
     courier.addEventListener('change',()=>{
       const name = courier.value;
+      const selectedLogo = courierLogoPicker?.querySelector(`input[value="${CSS.escape(name)}"]`);
+      if (selectedLogo) selectedLogo.checked = true;
       previewName.textContent = name;
       preview.querySelector('.courier-placeholder').hidden = !!name;
       if(!name){previewLogo.hidden=true;return;}
