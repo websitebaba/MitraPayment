@@ -147,6 +147,8 @@
     .promo-banner img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;object-position:center}
     @media(max-width:800px){.promo-banner{padding:9px 12px 12px}.promo-banner a{border-radius:12px}.promo-banner img{max-height:none}}
     @media(max-width:480px){.promo-banner{padding:7px 9px 10px}}
+  .legacy-order-card{display:none!important}.order-cta-heading{text-align:center;max-width:720px;margin-inline:auto}.order-cta-heading p{margin-bottom:22px}.order-cta-heading .wizard-btn{margin-inline:auto}
+  .package-modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,.5);display:grid;place-items:center;padding:16px;z-index:50}.package-modal{width:min(100%,760px);max-height:calc(100vh - 32px);overflow:auto;background:#fffefa;border:1px solid #eadfd2;border-radius:24px;box-shadow:0 24px 70px rgba(39,32,25,.22)}.package-modal[hidden]{display:none}.package-modal-header{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:24px 26px 14px;border-bottom:1px solid #eee6da}.package-modal-header{flex:none!important;height:auto!important;position:static!important;background:#fffefa!important;box-shadow:none!important}.package-modal-header>div{min-width:0}.package-modal-header .eyebrow{display:inline-flex;margin-bottom:8px}.package-modal-header h2{display:block;position:relative;margin:0;font-size:clamp(24px,4vw,34px);line-height:1.15;background:#fffefa}.package-modal-header p{display:block;position:relative;margin:8px 0 0;color:#687180;background:#fffefa}.package-form{position:relative}.package-close{border:0;background:#f3eee7;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:24px;line-height:1;color:#4d5360}.package-form{padding:20px 26px 26px;display:grid;gap:18px}.package-form[hidden]{display:none!important}.package-form fieldset{border:0;padding:0;margin:0;display:grid;gap:12px}.package-form legend{font-weight:800;font-size:15px;margin-bottom:2px;color:#263238}.package-form label{display:grid;gap:7px;color:#363d48;font-weight:700;font-size:13px}.package-form input,.package-form textarea,.package-form select{width:100%;border:1px solid #ded8cf;border-radius:12px;background:#fff;padding:12px 13px;font:inherit;color:#1f2937}.package-form textarea{min-height:84px;resize:vertical}.package-form input:focus,.package-form textarea:focus,.package-form select:focus{outline:3px solid rgba(215,25,32,.14);border-color:#d71920}.package-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.courier-options{display:grid;gap:8px}.courier-option{display:flex!important;align-items:center;gap:10px;border:1px solid #e4dfd7;border-radius:13px;padding:10px 12px;background:#fff;cursor:pointer;font-weight:500!important}.courier-option input{width:auto}.courier-option img{width:44px;height:28px;object-fit:contain}.courier-option span{display:grid;gap:2px}.courier-option small{color:#7a818c;font-weight:500}.cod-toggle{display:flex!important;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid #eadfd2;border-radius:14px;background:#fff}.switch{position:relative;width:48px;height:26px}.switch input{opacity:0;width:0;height:0}.switch span{position:absolute;inset:0;background:#d6d7da;border-radius:99px;cursor:pointer;transition:.2s}.switch span:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 4px #999}.switch input:checked+span{background:#d71920}.switch input:checked+span:before{transform:translateX(22px)}.cod-note{margin:0;padding:12px 14px;border-radius:12px;background:#fff4f0;color:#6d3b2e;font-size:13px;line-height:1.55}.cod-note[hidden]{display:none}.location-row{display:flex;gap:8px;align-items:stretch}.location-row input{flex:1}.location-btn{white-space:nowrap;border:1px solid #d71920;background:#fff;color:#b51219;border-radius:11px;padding:0 12px;font-weight:800;cursor:pointer}.map-preview{width:100%;height:170px;border:0;border-radius:14px;background:#eee;display:none}.map-preview.is-visible{display:block}.form-check{display:flex!important;align-items:flex-start;gap:9px;font-weight:600!important;line-height:1.45}.form-check input{width:17px;height:17px;margin-top:2px;accent-color:#d71920}.package-actions{display:flex;justify-content:flex-end;gap:10px;padding-top:4px}.package-actions .wizard-btn{min-width:170px}.order-feedback{display:none;align-items:center;gap:10px;padding:14px;border-radius:13px;background:#e9f8ef;color:#17663a;font-weight:800;margin:0 26px 24px}.order-feedback.is-visible{display:flex}.order-feedback-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#1f9d55;color:#fff}.receipt-download{color:#17663a;text-decoration:underline;font-weight:700}@media(max-width:600px){.package-modal-header,.package-form{padding-left:18px;padding-right:18px}.package-grid{grid-template-columns:1fr}.location-row{flex-direction:column}.location-btn{padding:11px}.package-actions{padding-bottom:4px}.package-actions .wizard-btn{width:100%}}
 
     /* Penyempurnaan ukuran teks dan elemen landing page */
     .hero h1{font-size:clamp(29px,3.5vw,43px);line-height:1.13;letter-spacing:-1.15px;max-width:760px}
@@ -855,12 +857,13 @@ footer{background:#202124;border-top:4px solid #1a73e8}
 <div class="visual-points"><div><b>01</b><span>Data pesanan</span></div><div><b>02</b><span>Pilihan layanan</span></div><div><b>03</b><span>Ringkasan pesanan</span></div></div></div></div>
 </section><section aria-label="Keunggulan DAVPAY INDONESIA" class="business-benefits"><div class="wrap"><div class="section-intro"><span class="eyebrow"><span class="dot"></span> KENAPA MEMILIH LAYANAN INI</span><h2>Lebih praktis untuk kebutuhan pengiriman Anda</h2><p>Informasi pesanan tersusun dalam satu alur, sehingga lebih mudah dipahami sebelum melanjutkan proses dengan penyedia layanan.</p></div><div class="benefit-grid"><article class="benefit-card"><span class="benefit-icon">✦</span><h3>Informasi Lebih Rapi</h3><p>Data pengirim, penerima, dan produk dirangkum dalam satu formulir.</p></article><article class="benefit-card"><span class="benefit-icon">↗</span><h3>Alur Praktis</h3><p>Ikuti tahapan pengisian yang jelas dari informasi hingga ringkasan pesanan.</p></article><article class="benefit-card"><span class="benefit-icon">⌖</span><h3>Pilihan Layanan</h3><p>Lihat pilihan mitra pengiriman yang tersedia dan konfirmasikan layanan melalui kanal resminya.</p></article></div></div></section><section class="order-wizard-section" id="buat-pesanan">
 <div class="wrap">
-<div class="order-wizard-heading">
-<span class="eyebrow"><span class="dot"></span> FORMULIR PESANAN</span>
-<h2>Buat Pesanan</h2>
-<p>Lengkapi informasi pengirim, penerima, produk, dan pilihan pengiriman dalam tiga langkah.</p>
+<div class="order-wizard-heading order-cta-heading">
+<span class="eyebrow"><span class="dot"></span> LAYANAN PENGIRIMAN</span>
+<h2>Kamu ingin kirim paket?</h2>
+<p>Silakan klik tombol di bawah ini untuk mengisi detail pesanan.</p>
+<button class="wizard-btn primary open-order-form" type="button">Pesan Sekarang <b>→</b></button>
 </div>
-<div class="order-wizard-card">
+<div class="order-wizard-card legacy-order-card">
 <div aria-label="Progres formulir" class="wizard-progress">
 <div class="wizard-progress-step active" data-progress="1"><span>1</span><small>Informasi</small></div>
 <i></i>
@@ -1572,43 +1575,7 @@ openBtn.addEventListener('click', event => {
   })();
 
 </script>
-<script>
-(() => {
-  const root = document.querySelector('.promo-carousel');
-  if (!root) return;
-  const slides = [...root.querySelectorAll('.promo-slide')];
-  const dots = [...root.querySelectorAll('.promo-dot')];
-  const prev = root.querySelector('.promo-prev');
-  const next = root.querySelector('.promo-next');
-  let current = 0;
-  let timer;
-  function show(index) {
-    current = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === current);
-      slide.setAttribute('aria-hidden', i === current ? 'false' : 'true');
-      if (i !== current) slide.setAttribute('tabindex', '-1');
-      else slide.removeAttribute('tabindex');
-    });
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === current);
-      if (i === current) dot.setAttribute('aria-current', 'true');
-      else dot.removeAttribute('aria-current');
-    });
-  }
-  function restart() {
-    clearInterval(timer);
-    timer = setInterval(() => show(current + 1), 5000);
-  }
-  prev?.addEventListener('click', () => { show(current - 1); restart(); });
-  next?.addEventListener('click', () => { show(current + 1); restart(); });
-  dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); restart(); }));
-  root.addEventListener('mouseenter', () => clearInterval(timer));
-  root.addEventListener('mouseleave', restart);
-  show(0);
-  restart();
-})();
-</script><!--Start of Tawk.to Script-->
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -1621,32 +1588,24 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+
+<div aria-labelledby="packageModalTitle" aria-modal="true" class="package-modal-backdrop" hidden id="packageModal" role="dialog">
+  <section class="package-modal">
+    <header class="package-modal-header"><div><span class="eyebrow"><span class="dot"></span> FORMULIR PESANAN</span><h2 id="packageModalTitle">Mau Kirim Paket COD?</h2><p>Silakan lengkapi form berikut ini:</p></div><button aria-label="Tutup formulir pesanan" class="package-close" type="button">×</button></header>
+    <form class="package-form" id="packageForm">
+      <fieldset><legend>Informasi penerima</legend><div class="package-grid"><label>Nama penerima :<input name="recipientName" required placeholder="Nama lengkap penerima"></label><label>Nomor HP :<input name="recipientPhone" required type="tel" placeholder="08xxxxxxxxxx"></label></div><label>Alamat Pengiriman :<textarea name="deliveryAddress" required placeholder="Alamat lengkap tujuan pengiriman"></textarea></label></fieldset>
+      <fieldset><legend>Pilih layanan Pengiriman :</legend><div class="courier-options"><label class="courier-option"><input name="courier" required type="radio" value="JNE Express"><img alt="Logo JNE Express" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'%3E%3Ctext x='3' y='28' font-size='22' font-weight='700' fill='%230f3d91'%3EJNE%3C/text%3E%3C/svg%3E"><span>JNE Express<small>Estimasi 1–3 hari</small></span></label><label class="courier-option"><input name="courier" type="radio" value="J&amp;T Express"><img alt="Logo J&amp;T Express" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'%3E%3Ctext x='3' y='28' font-size='20' font-weight='700' fill='%23e21b23'%3EJ%26amp%3BT%3C/text%3E%3C/svg%3E"><span>J&amp;T Express<small>Estimasi 1–3 hari</small></span></label><label class="courier-option"><input name="courier" type="radio" value="SiCepat"><img alt="Logo SiCepat" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'%3E%3Ctext x='3' y='28' font-size='17' font-weight='700' fill='%23d71920'%3ESiCepat%3C/text%3E%3C/svg%3E"><span>SiCepat<small>Estimasi 1–2 hari</small></span></label><label class="courier-option"><input name="courier" type="radio" value="AnterAja"><img alt="Logo AnterAja" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'%3E%3Ctext x='3' y='28' font-size='16' font-weight='700' fill='%23df2374'%3EAnterAja%3C/text%3E%3C/svg%3E"><span>AnterAja<small>Estimasi 1–3 hari</small></span></label></div></fieldset>
+      <label class="cod-toggle"><span>Gunakan pembayaran COD (Non Tunai)<small style="display:block;color:#7a818c;font-weight:500;margin-top:3px">Bayar melalui aplikasi sebelum paket sampai.</small></span><span class="switch"><input id="codSwitch" name="cod" type="checkbox"><span></span></span></label><p class="cod-note" hidden id="codNote">Cash On Delivery (Non Tunai) berarti pembeli menyiapkan pembayaran sebelum layanan pengiriman tiba. Konfirmasi pesanan diperlukan untuk membantu mencegah pesanan palsu dan menjaga transaksi tetap aman serta nyaman bagi kedua pihak.</p>
+      <fieldset><legend>Detail produk</legend><div class="package-grid"><label>Kategori Produk :<select name="productCategory" required><option value="">Pilih kategori produk</option><option>Pakaian &amp; Aksesori</option><option>Elektronik</option><option>Makanan &amp; Minuman</option><option>Dokumen</option><option>Rumah Tangga</option><option>Lainnya</option></select></label><label>Nama Produk :<input name="productName" required placeholder="Nama barang"></label><label>Harga Produk :<input name="productPrice" required min="1" type="number" placeholder="Rp 0"></label></div><label>Keterangan :<textarea name="productNote" placeholder="Tambahkan keterangan produk"></textarea></label></fieldset>
+      <label class="form-check"><input name="shippingTerms" required type="checkbox"><span>Setuju mengikuti prosedur layanan pengiriman yang berlaku.</span></label><div class="package-actions"><button class="wizard-btn primary" type="submit">Buat Pesanan <b>→</b></button></div>
+    </form>
+    <form class="package-form sender-form" hidden id="senderForm"><fieldset><legend>Info pengirim</legend><div class="package-grid"><label>Nama pengirim :<input name="senderName" required placeholder="Nama lengkap pengirim"></label><label>Email pengirim :<input name="senderEmail" required type="email" placeholder="nama@email.com"></label><label>Nomor HP :<input name="senderPhone" required type="tel" placeholder="08xxxxxxxxxx"></label></div><label>Alamat Pickup :<div class="location-row"><input id="pickupAddress" name="pickupAddress" required placeholder="Alamat pickup"><button class="location-btn" id="useLocation" type="button">Gunakan Lokasi Saya</button></div></label><iframe aria-label="Peta lokasi pickup" class="map-preview" id="pickupMap" loading="lazy"></iframe></fieldset><label class="form-check"><input name="senderTerms" required type="checkbox"><span>Setuju dengan kebijakan layanan pengiriman.</span></label><div class="package-actions"><button class="wizard-btn primary" type="submit">Buat &amp; Cetak Resi</button></div></form>
+    <div class="order-feedback" id="orderFeedback" role="status"><span aria-hidden="true" class="order-feedback-icon">✓</span><span>Pesanan berhasil dibuat. <a class="receipt-download" hidden id="receiptDownload">Unduh PNG resi</a></span></div>
+  </section>
+</div>
 <script>
-  (() => {
-    const replacementBanner = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png";
-    document.querySelectorAll('.promo-slide img').forEach((image) => {
-      if (image.src.startsWith('data:image/')) image.src = replacementBanner;
-    });
-  })();
-</script>
-<script>
-  document.querySelectorAll('.promo-slide img').forEach((image) => {
-    if (image.src.startsWith('data:image/')) {
-      image.src = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png';
-      image.alt = 'Banner DAVPAY Indonesia Versi 2 Bold Premium Merah';
-    }
-  });
-</script>
-<script>
-  (() => {
-    const davpayPromo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DAVPAY_Indonesia_Poster_Merah-cvKnTbJGCdYRjwifR0sOxkWqf5PNNM.png';
-    document.querySelectorAll('.promo-slide img').forEach((image, index) => {
-      if (index > 0) {
-        image.src = davpayPromo;
-        image.alt = 'Banner promosi DAVPAY Indonesia';
-      }
-    });
-  })();
+(() => {const modal=document.getElementById('packageModal'), openers=document.querySelectorAll('.open-order-form'), close=modal.querySelector('.package-close'), orderForm=document.getElementById('packageForm'), senderForm=document.getElementById('senderForm'), cod=document.getElementById('codSwitch'), note=document.getElementById('codNote'), map=document.getElementById('pickupMap'), address=document.getElementById('pickupAddress'), feedback=document.getElementById('orderFeedback'), download=document.getElementById('receiptDownload');
+function open(){modal.hidden=false;document.body.style.overflow='hidden';orderForm.hidden=false;senderForm.hidden=true;feedback.classList.remove('is-visible');orderForm.querySelector('input')?.focus()} function shut(){modal.hidden=true;document.body.style.overflow=''} openers.forEach(button=>button.addEventListener('click',open));close.addEventListener('click',shut);modal.addEventListener('click',e=>{if(e.target===modal)shut()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)shut()});cod.addEventListener('change',()=>{note.hidden=!cod.checked});orderForm.addEventListener('submit',e=>{e.preventDefault();if(!orderForm.reportValidity())return;orderForm.hidden=true;senderForm.hidden=false;senderForm.querySelector('input')?.focus()});document.getElementById('useLocation').addEventListener('click',()=>{if(!navigator.geolocation){alert('Geolokasi tidak tersedia di perangkat ini.');return}navigator.geolocation.getCurrentPosition(async position=>{const {latitude,longitude}=position.coords;map.src=`https://www.google.com/maps?q=${latitude},${longitude}&output=embed`;map.classList.add('is-visible');try{const response=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`);const result=await response.json();if(result.display_name)address.value=result.display_name}catch(error){address.value=`Lokasi terdeteksi: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`}},()=>alert('Lokasi belum dapat diakses. Silakan izinkan lokasi atau isi alamat secara manual.'))});senderForm.addEventListener('submit',e=>{e.preventDefault();if(!senderForm.reportValidity())return;const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=760;const context=canvas.getContext('2d');context.fillStyle='#fffefa';context.fillRect(0,0,canvas.width,canvas.height);context.fillStyle='#d71920';context.fillRect(0,0,canvas.width,120);context.fillStyle='#fff';context.font='bold 42px Arial';context.fillText('DAVPAY INDONESIA',48,76);context.fillStyle='#263238';context.font='bold 30px Arial';context.fillText('RESI PESANAN',48,190);context.font='24px Arial';let y=245;const data=new FormData(orderForm);const sender=new FormData(senderForm);[['Nama penerima',data.get('recipientName')],['Nomor HP',data.get('recipientPhone')],['Alamat',data.get('deliveryAddress')],['Layanan',data.get('courier')],['Produk',data.get('productName')],['Harga','Rp '+Number(data.get('productPrice')).toLocaleString('id-ID')],['Pengirim',sender.get('senderName')],['Pickup',sender.get('pickupAddress')]].forEach(([key,value])=>{context.font='bold 22px Arial';context.fillText(`${key}:`,48,y);context.font='22px Arial';context.fillText(String(value||'-').slice(0,75),280,y);y+=52});context.fillStyle='#17663a';context.font='bold 25px Arial';context.fillText('Pesanan berhasil dibuat',48,690);const link=document.createElement('a');link.download=`resi-davpay-${Date.now()}.png`;link.href=canvas.toDataURL('image/png');link.click();download.hidden=false;download.href=link.href;download.download=link.download;feedback.classList.add('is-visible');senderForm.hidden=true});})();
 </script>
 </body>
 </html>
